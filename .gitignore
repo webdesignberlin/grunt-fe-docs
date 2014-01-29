@@ -4,3 +4,6 @@
 /docs/
 /example/articleview.scss
 /example/config.rb
+/.idea/
+
+/grunt-css-docs.iml

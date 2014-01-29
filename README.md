@@ -1,6 +1,8 @@
-# Grunt-DSS [![Build Status](https://secure.travis-ci.org/darcyclarke/grunt-dss.png?branch=master)](http://travis-ci.org/darcyclarke/grunt-dss)
+#  Grunt-CSS-Docs
 
-**Grunt-DSS** is a **[Grunt](http://gruntjs.com)** plugin that generates UI documentation from CSS, Less, Stylus, Sass files based on the **[DSS](https://github.com/darcyclarke/dss)** parser output.
+**Grunt-CSS-Docs** genertates style guide format documentation from CSS, Less, Stylus, Sass files based on the **[DSS](https://github.com/darcyclarke/dss)** parser output.
+
+This is a fork from the orginal [Grunt DSS](https://github.com/darcyclarke/grunt-dss) plugin from [Darcy Clarke](https://github.com/darcyclarke/) (the creator of **[DSS](https://github.com/darcyclarke/dss)**).  We needed to customise some features to suit our project needs.  Check the release notes for more information.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.0`
@@ -8,16 +10,16 @@ This plugin requires Grunt `~0.4.0`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-dss --save-dev
+npm install grunt-css-docs --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-dss');
+grunt.loadNpmTasks('grunt-css-docs');
 ```
 
-In your project's Gruntfile, add a section named `dss` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `cssdocs` to the data object passed into `grunt.initConfig()`.
 
 ## Settings
 
@@ -60,7 +62,7 @@ An object filled with key value pairs of functions to be used when parsing comme
 
 ```javascript
 grunt.initConfig({
-  dss: {
+  cssdocs: {
     docs: {
       files: {
         'api/': 'css/**/*.{css,scss,sass,less,styl}'

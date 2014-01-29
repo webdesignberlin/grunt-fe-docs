@@ -1,56 +1,75 @@
 {
-  "name": "grunt-dss",
-  "description": "Build UI Documentation with the DSS Parser",
-  "version": "1.0.6",
-  "homepage": "https://github.com/darcyclarke/grunt-dss",
-  "author": "darcyclarke <darcy@darcyclarke.me> (https://darcyclarke.me)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/darcyclarke/grunt-dss"
-  },
-  "bugs": {
-    "url": "https://github.com/darcyclarke/grunt-dss/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/darcyclarke/grunt-dss/blob/master/LICENSE-MIT"
+    "name"            : "grunt-css-docs",
+    "description"     : "CSS Docs & Style Guide generator based on DSS. (Similar to JSDoc format) Template support Handlebars, Hogan, Jade, Mustache",
+    "version"         : "1.1.0",
+    "homepage"        : "https://github.com/roughcoder/grunt-css-docs",
+    "author"          : "Neil Barton <neil@roughcoder.com> (https://github.com/roughcoder)",
+    "contributors": [
+        {
+            "name": "Darcy Clarke",
+            "url": "https://github.com/darcyclarke"
+        },
+        {
+            "name": "Neil Barton",
+            "url": "https://github.com/roughcoder",
+            "email": "neil@roughcoder.com"
+        },
+        {
+            "name": "Paul Rudge",
+            "url": "https://github.com/fakeplasticpaul",
+            "email": "prudge@gumtree.com"
+        }
+    ],
+    "repository"      : {
+        "type": "git",
+        "url" : "https://github.com/roughcoder/grunt-css-docs"
+    },
+    "bugs"            : {
+        "url": "https://github.com/roughcoder/grunt-css-docs/issues"
+    },
+    "licenses"        : [
+        {
+            "type": "MIT",
+            "url" : "https://github.com/roughcoder/grunt-css-docs/blob/master/LICENSE-MIT"
+        }
+    ],
+    "main"            : "Gruntfile.js",
+    "engines"         : {
+        "node": ">= 0.8.0"
+    },
+    "scripts"         : {
+        "test": "grunt test"
+    },
+    "dependencies"    : {
+        "dss"       : "1.0.3",
+        "marked"    : "~0.3.0",
+        "handlebars": "~1.3.0",
+        "hogan.js"  : "~2.0.0",
+        "mustache"  : "~0.8.1",
+        "jade"      : "~1.1.5"
+    },
+    "devDependencies" : {
+        "grunt"                 : "~0.4.0",
+        "grunt-contrib-jshint"  : "~0.3.0",
+        "grunt-contrib-nodeunit": "~0.1.2",
+        "grunt-contrib-clean"   : "~0.4.0"
+    },
+    "peerDependencies": {
+        "grunt": "~0.4.0"
+    },
+    "keywords"        : [
+        "gruntplugin",
+        "css",
+        "dss",
+        "styles",
+        "docs",
+        "documentation",
+        "cli"
+    ],
+    "readmeFilename"  : "README.md",
+    "directories"     : {
+        "doc"    : "docs",
+        "example": "example",
+        "test"   : "test"
     }
-  ],
-  "main": "Gruntfile.js",
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "dependencies": {
-    "dss": "1.0.3",
-    "handlebars": "1.0.12"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-contrib-jshint": "~0.3.0",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-clean": "~0.4.0"
-  },
-  "peerDependencies": {
-    "grunt": "~0.4.0"
-  },
-  "keywords": [
-    "gruntplugin",
-    "css",
-    "dss",
-    "styles",
-    "docs",
-    "documentation",
-    "cli"
-  ],
-  "gitHead": "9ac17c8a2715bede330bd4fed3ba8e4648ce1542",
-  "readmeFilename": "README.md",
-  "directories": {
-    "doc": "docs",
-    "example": "example",
-    "test": "test"
-  }
 }
