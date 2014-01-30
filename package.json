@@ -48,7 +48,7 @@
     "mustache": "~0.8.1",
     "jade": "~1.1.5",
     "lodash": "~2.4.1",
-    "htmltidy": "0.0.6"
+    "js-beautify": "~1.4.2"
   },
   "devDependencies": {
     "grunt": "~0.4.0",

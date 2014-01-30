@@ -6,12 +6,12 @@
  * Licensed under the MIT license.
  */
 
-// Include dependancies
+// Include dependencies
 var handlebars = require('handlebars');
 var dss = require('dss');
 var _ = require('lodash');
 var marked = require('marked');
-
+var beautify_html = require('js-beautify').html;
 // Expose
 module.exports = function (grunt) {
 
@@ -36,6 +36,7 @@ module.exports = function (grunt) {
             }
         });
 
+        // TODO: Move to options
         var markedOptions = {
             gfm: true,
             tables: true,
@@ -45,8 +46,6 @@ module.exports = function (grunt) {
             smartLists: true,
             smartypants: false
         };
-
-
 
         // Output options if --verbose cl option is passed
         grunt.verbose.writeflags(options, 'Options');
@@ -78,7 +77,6 @@ module.exports = function (grunt) {
                 length = files.length,
                 styleguide = [];
 
-            console.log(src);
             // Parse files
             files.map(function (filename) {
 
@@ -97,10 +95,14 @@ module.exports = function (grunt) {
                             }
                             block['file'] = filename;
                         }
-                        if (block['description']){
+                        if (block['description']) {
                             var tokens = marked.lexer(block['description'], markedOptions);
                             block['description'] = marked.parser(tokens);
                         }
+                        if (block['markup']) {
+                            block['markup']['example'] = beautify_html(block['markup']['example']);
+                        }
+
                         styleguide.push(block);
                     });
 
@@ -108,7 +110,7 @@ module.exports = function (grunt) {
 
             });
 
-            styleguide = _.groupBy(styleguide,'category');
+            styleguide = _.groupBy(styleguide, 'category');
 
             // Set output template and file
             var template_filepath = template_dir + options.template_index,
@@ -123,7 +125,6 @@ module.exports = function (grunt) {
                 '**/*',
                 '!' + options.template_index
             ], output_dir, { cwd: template_dir }).forEach(function (filePair) {
-//                    console.log(filePair);
                     filePair.src.forEach(function (src) {
                         if (grunt.file.isDir(src)) {
                             grunt.verbose.writeln('Creating ' + filePair.dest.cyan);
