@@ -9,6 +9,8 @@
 // Include dependancies
 var handlebars = require('handlebars');
 var dss = require('dss');
+var _ = require('lodash');
+var marked = require('marked');
 
 // Expose
 module.exports = function (grunt) {
@@ -33,6 +35,18 @@ module.exports = function (grunt) {
                 }
             }
         });
+
+        var markedOptions = {
+            gfm: true,
+            tables: true,
+            breaks: false,
+            pedantic: false,
+            sanitize: true,
+            smartLists: true,
+            smartypants: false
+        };
+
+
 
         // Output options if --verbose cl option is passed
         grunt.verbose.writeflags(options, 'Options');
@@ -64,6 +78,7 @@ module.exports = function (grunt) {
                 length = files.length,
                 styleguide = [];
 
+            console.log(src);
             // Parse files
             files.map(function (filename) {
 
@@ -81,17 +96,19 @@ module.exports = function (grunt) {
                                 block['category'] = filename;
                             }
                             block['file'] = filename;
-                            styleguide.push(block);
                         }
+                        if (block['description']){
+                            var tokens = marked.lexer(block['description'], markedOptions);
+                            block['description'] = marked.parser(tokens);
+                        }
+                        styleguide.push(block);
                     });
-
 
                 });
 
             });
 
-
-            console.log(styleguide);
+            styleguide = _.groupBy(styleguide,'category');
 
             // Set output template and file
             var template_filepath = template_dir + options.template_index,
@@ -106,6 +123,7 @@ module.exports = function (grunt) {
                 '**/*',
                 '!' + options.template_index
             ], output_dir, { cwd: template_dir }).forEach(function (filePair) {
+//                    console.log(filePair);
                     filePair.src.forEach(function (src) {
                         if (grunt.file.isDir(src)) {
                             grunt.verbose.writeln('Creating ' + filePair.dest.cyan);
