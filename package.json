@@ -47,7 +47,8 @@
     "hogan.js": "~2.0.0",
     "mustache": "~0.8.1",
     "jade": "~1.1.5",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "htmltidy": "0.0.6"
   },
   "devDependencies": {
     "grunt": "~0.4.0",
