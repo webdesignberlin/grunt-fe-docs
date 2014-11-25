@@ -1,8 +1,6 @@
-#  Grunt-CSS-Docs
+#  Grunt-FE-Docs
 
-**Grunt-CSS-Docs** genertates style guide format documentation from CSS, Less, Stylus, Sass files based on the **[DSS](https://github.com/darcyclarke/dss)** parser output.
-
-This is a fork from the orginal [Grunt DSS](https://github.com/darcyclarke/grunt-dss) plugin from [Darcy Clarke](https://github.com/darcyclarke/) (the creator of **[DSS](https://github.com/darcyclarke/dss)**).  We needed to customise some features to suit our project needs.  Check the release notes for more information.
+**Grunt-FE-Docs** is a fork of the **[grunt-css-docs](https://github.com/roughcoder/grunt-css-docs)**-Plugin used to generate documentation from CSS, Less, Stylus, Sass files based on the **[DSS](https://github.com/darcyclarke/dss)** parser output.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.0`
@@ -10,16 +8,16 @@ This plugin requires Grunt `~0.4.0`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-css-docs --save-dev
+npm install https://github.com/Webastronaut/grunt-fe-docs.git --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-css-docs');
+grunt.loadNpmTasks('grunt-fe-docs');
 ```
 
-In your project's Gruntfile, add a section named `cssdocs` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `fedocs` to the data object passed into `grunt.initConfig()`.
 
 ## Settings
 
@@ -60,31 +58,62 @@ An object filled with key value pairs of functions to be used when parsing comme
 
 ### Example initConfig
 
+I recommend to use the config below, because until now I had no time to implement all the parsers used below to the plugin. Help is very welcome!
+
 ```javascript
 grunt.initConfig({
-  cssdocs: {
-    docs: {
-      files: {
-        'api/': 'css/**/*.{css,scss,sass,less,styl}'
-      },
-      options: {
-        template: '/dark_theme/',
-        parsers: {
-          // Finds @link in comment blocks
-          link: function(i, line, block){
+  fedocs: {
+      docs: {
+          files: {
+              'api/': 'css/**/*.{css,scss,sass,less,styl}'
+          },
+          options: {
+              parsers: {
+                  link: function(i, line){
+                      line = '<a href="' + line + '" target="_blank">' + line + '</a>';
 
-            // Replace link with HTML wrapped version
-            var exp = /(b(https?|ftp|file)://[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig;
-            line.replace(exp, "<a href='$1'>$1</a>");
-            return line;
+                      return line;
+                  },
+                  dependencies: function(i, line){
+                      return line.split(',');
+                  },
+                  decorator: function(i, line){
+                      var string = line.split(' - ');
+
+                      return { name: string[0], description: string[1] ? string[1] : '-' };
+                  },
+                  requires: function(i, line){
+                      var string = line.split(' ');
+
+                      string[0] = string[0].replace(/(\{|\})/g, '');
+
+                      return { type: string[0], name: string[1] };
+                  },
+                  param: function(i, line){
+                      var string = line.split(' - '),
+                          description = string[1] ? string[1] : '-';
+
+                      string = string[0].split(' ');
+                      string[0] = string[0].replace(/(\{|\})/g, '');
+
+                      return { type: string[0], name: string[1], description: description };
+                  },
+                  query: function(i, line) {
+                      var string = line.split(' - ');
+
+                      return { name: string[0], description: string[1] ? string[1] : '-' };
+                  },
+                  section: function(i, line) {
+                      var string = line.split(' - ');
+
+                      return { name: string[0], description: string[1] ? string[1] : '-' };
+                  },
+                  type: function(i, line) {
+                      return line.replace(/(\{|\})/g, '');
+                  }
+              }
           }
-        }
       }
-    }
-  }
+  },
 });
 ````
-
-## DSS Sublime Text Plugin
-
-You can now **auto-complete** DSS-style comment blocks using @sc8696's [Auto-Comments Sublime Text Plugin](https://github.com/sc8696/sublime-css-auto-comments)

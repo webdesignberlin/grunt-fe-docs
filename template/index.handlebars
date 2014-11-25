@@ -2,98 +2,233 @@
 <html>
 <head>
 
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
-    <title>{{project.name}} styleguide</title>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+	<title>{{project.name}} - Documentation</title>
 
-    <link rel="stylesheet" href="styleguide/assets/css/styles.css?v=1" type="text/css"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://getbootstrap.com/assets/css/docs.min.css">
 
-    <link rel="stylesheet" href="/style/global.css" type="text/css"/>
-    <link rel="stylesheet" href="/style/components.css" type="text/css"/>
+	<link rel="stylesheet" href="assets/css/syntaxhighlighter/shCore.css" type="text/css"/>
+	<link rel="stylesheet" href="assets/css/syntaxhighlighter/shCoreDefault.css" type="text/css"/>
+	<!-- Include required JS files -->
+	<script type="text/javascript" src="assets/js/syntaxhighlighter/shCore.js"></script>
 
-    <link rel="stylesheet" href="styleguide/assets/css/syntaxhighlighter/shCore.css" type="text/css"/>
-    <link rel="stylesheet" href="styleguide/assets/css/syntaxhighlighter/shCoreDefault.css" type="text/css"/>
-    <!-- Include required JS files -->
-    <script type="text/javascript" src="styleguide/assets/js/syntaxhighlighter/shCore.js"></script>
+	<!--
+		At least one brush, here we choose JS. You need to include a brush for every
+		language you want to highlight
+	-->
+	<script type="text/javascript" src="assets/js/syntaxhighlighter/shBrushXml.js"></script>
 
-    <!--
-        At least one brush, here we choose JS. You need to include a brush for every
-        language you want to highlight
-    -->
-    <script type="text/javascript" src="styleguide/assets/js/syntaxhighlighter/shBrushXml.js"></script>
+	<style>
+		tbody td {
+			font-weight:normal;
+		}
+	</style>
 </head>
 <body>
 
-<header>
-    <h1>{{project.name}} styleguide</h1>
+<div class="navbar navbar-default navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a name="top" class="navbar-brand">{{project.name}} - Documentation v.<strong>{{project.version}}</a>
+		</div>
+	</div>
+</div>
 
-    <p class="version">v.<strong>{{project.version}}</strong></p>
-
-    <p class="description">{{project.description}}</p>
-</header>
-
-<div id="wrapper">
-
-    <nav role="main">
-        <h2>Table of Contents</h2>
-        <ul>
+<div class="container-fluid bs-docs-container">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="bs-docs-sidebar">
+				<ul class="nav bs-docs-sidenav">
+                    {{#each files}}
+						<li><a href="#{{@key}}" data-file="{{@key}}">
+                            {{#this}}
+								<strong>{{name}}</strong>{{#if type}}<em>:{{type}}</em>{{/if}}
+                            {{/this}}
+						</a></li>
+                    {{/each}}
+				</ul>
+				<a class="back-to-top" href="#top">
+					Back to top
+				</a>
+			</div>
+			<!--Sidebar content-->
+		</div>
+		<div class="col-md-9">
             {{#each files}}
-                <li><a href="#{{@key}}" data-file="{{@key}}">{{@key}}</a></li>
+				<div class="bs-docs-section">
+
+					<a id="{{@key}}"></a>
+                    {{#this}}
+
+						<div>
+
+							<div class="info">
+								<h3>{{name}}{{#if type}}<em>:{{type}}</em>{{/if}}</h3>
+
+                                {{#if description}}
+                                    {{{description}}}
+                                {{/if}}
+
+								<table class="table table-striped table-condensed table-bordered">
+									<thead></thead>
+									<tbody>
+									<tr>
+										<td><strong>Path:</strong></td>
+										<td>{{file}}</td>
+									</tr>
+                                    {{#if link}}
+										<tr>
+											<td><strong>Link:</strong></td>
+											<td>{{{link}}}</td>
+										</tr>
+                                    {{/if}}
+                                    {{#if param}}
+										<tr>
+											<td><strong>Params:</strong></td>
+											<td>
+												<ul>
+                                                    {{#param}}
+														<li><strong>{{name}}</strong><em>:{{type}}</em> - {{description}}</li>
+                                                    {{/param}}
+												</ul>
+											</td>
+										</tr>
+                                    {{/if}}
+                                    {{#if dependencies}}
+										<tr>
+											<td><strong>Dependencies:</strong></td>
+											<td>
+												<ul>
+                                                    {{#dependencies}}
+														<li>{{this}}</li>
+                                                    {{/dependencies}}
+												</ul>
+											</td>
+										</tr>
+                                    {{/if}}
+                                    {{#if requires}}
+										<tr>
+											<td><strong>Requires:</strong></td>
+											<td>
+												<ul>
+                                                    {{#requires}}
+														<li><strong>{{name}}</strong><em>:{{type}}</em></li>
+                                                    {{/requires}}
+												</ul>
+											</td>
+										</tr>
+                                    {{/if}}
+                                    {{#if markup}}
+										<tr>
+											<td><strong>Markup</strong></td>
+											<td>
+                                                {{#if markup}}
+													<pre class="markup brush: xml">
+                                                        {{{markup.example}}}
+													</pre>
+                                                {{/if}}
+											</td>
+										</tr>
+                                    {{/if}}
+									</tbody>
+                                    {{#if section}}
+										<tr><td colspan="2"><br /><h4>Sections</h4></td></tr>
+										<thead>
+										<tr>
+											<th>
+												Section
+											</th>
+											<th>
+												Description
+											</th>
+										</tr>
+										</thead>
+										<tbody>
+                                        {{#section}}
+											<tr>
+												<td><strong>{{name}}</strong></td>
+												<td>{{description}}</td>
+											</tr>
+                                        {{/section}}
+										</tbody>
+                                    {{/if}}
+
+                                    {{#if state}}
+										<tr><td colspan="2"><br /><h4>States</h4></td></tr>
+										<thead>
+										<tr>
+											<th>
+												State
+											</th>
+											<th>
+												Description
+											</th>
+										</tr>
+										</thead>
+										<tbody>
+                                        {{#state}}
+											<tr>
+												<td><strong>{{name}}</strong></td>
+												<td>{{description}}</td>
+											</tr>
+                                        {{/state}}
+										</tbody>
+                                    {{/if}}
+
+                                    {{#if decorator}}
+										<tr><td colspan="2"><br /><h4>Decorator</h4></td></tr>
+										<thead>
+										<tr>
+											<th>
+												Decorator
+											</th>
+											<th>
+												Description
+											</th>
+										</tr>
+										</thead>
+										<tbody>
+                                        {{#decorator}}
+											<tr>
+												<td><strong>{{name}}</strong></td>
+												<td>{{description}}</td>
+											</tr>
+                                        {{/decorator}}
+										</tbody>
+                                    {{/if}}
+
+                                    {{#if decorator}}
+										<tr><td colspan="2"><br /><h4>Media Queries</h4></td></tr>
+										<thead>
+										<tr>
+											<th>
+												Media Query
+											</th>
+											<th>
+												Description
+											</th>
+										</tr>
+										</thead>
+										<tbody>
+                                        {{#query}}
+											<tr>
+												<td><strong>{{name}}</strong></td>
+												<td>{{description}}</td>
+											</tr>
+                                        {{/query}}
+										</tbody>
+                                    {{/if}}
+								</table>
+							</div>
+
+						</div>
+                    {{/this}}
+				</div>
+				<hr />
             {{/each}}
-        </ul>
-    </nav>
-
-    <div class="styleguide">
-
-
-        {{#each files}}
-            <div class="file">
-
-                <h3 id="{{@key}}">{{@key}}</h3>
-
-                {{#this}}
-                    <div class="block">
-
-                        <div class="info">
-                            <h4>{{name}}</h4>
-
-                            {{#if description}}
-                                <p class="description">{{{description}}}</p>
-                            {{/if}}
-
-                            {{#state}}
-                                <p class="state"><span>{{name}}</span> - {{description}}</p>
-                            {{/state}}
-                        </div>
-
-                        {{#if markup}}
-
-                            <div class="example">
-                                {{{markup.example}}}
-                            </div>
-
-                            {{#state}}
-                                <div class="example state {{class}}">
-                                    <div class="name">{{name}}</div>
-                                    {{{../markup.example}}}
-                                </div>
-                            {{/state}}
-
-                            <pre class="markup brush: xml">
-{{{markup.example}}}
-                            </pre>
-
-
-                        {{/if}}
-
-                    </div>
-                {{/this}}
-
-
-            </div>
-        {{/each}}
-
-    </div>
-
+		</div>
+	</div>
 </div>
 
 <footer>
@@ -102,8 +237,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <script type="text/javascript">
-    SyntaxHighlighter.defaults['toolbar'] = false;
-    SyntaxHighlighter.all()
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
 </script>
 </body>
 </html>

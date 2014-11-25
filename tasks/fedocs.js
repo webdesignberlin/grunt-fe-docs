@@ -79,32 +79,32 @@ module.exports = function (grunt) {
 
             // Parse files
             files.map(function (filename) {
-
                 // Report file
                 grunt.verbose.writeln('• ' + grunt.log.wordlist([filename], {color: 'cyan'}));
 
                 // Parse
                 dss.parse(grunt.file.read(filename), { file: filename }, function (parsed) {
+                    if(parsed.blocks.length) {
+                        // Restructure the blocks
+                        parsed.blocks.forEach(function (block) {
+                            if (block['name']) {
+                                if (!block['category']) {
+                                    block['category'] = filename;
+                                }
+                                block['file'] = filename;
 
+                                if (block['description']) {
+                                    var tokens = marked.lexer(block['description'], markedOptions);
+                                    block['description'] = marked.parser(tokens);
+                                }
+                                if (block['markup']) {
+                                    block['markup']['example'] = beautify_html(block['markup']['example']);
+                                }
 
-                    // Restructure the blocks
-                    parsed.blocks.forEach(function (block) {
-                        if (block['name']) {
-                            if (!block['category']) {
-                                block['category'] = filename;
+                                styleguide.push(block);
                             }
-                            block['file'] = filename;
-                        }
-                        if (block['description']) {
-                            var tokens = marked.lexer(block['description'], markedOptions);
-                            block['description'] = marked.parser(tokens);
-                        }
-                        if (block['markup']) {
-                            block['markup']['example'] = beautify_html(block['markup']['example']);
-                        }
-
-                        styleguide.push(block);
-                    });
+                        });
+                    }
 
                 });
 
@@ -125,16 +125,16 @@ module.exports = function (grunt) {
                 '**/*',
                 '!' + options.template_index
             ], output_dir, { cwd: template_dir }).forEach(function (filePair) {
-                    filePair.src.forEach(function (src) {
-                        if (grunt.file.isDir(src)) {
-                            grunt.verbose.writeln('Creating ' + filePair.dest.cyan);
-                            grunt.file.mkdir(filePair.dest);
-                        } else {
-                            grunt.verbose.writeln('Copying ' + src.cyan + ' -> ' + filePair.dest.cyan);
-                            grunt.file.copy(src, filePair.dest);
-                        }
-                    });
+                filePair.src.forEach(function (src) {
+                    if (grunt.file.isDir(src)) {
+                        grunt.verbose.writeln('Creating ' + filePair.dest.cyan);
+                        grunt.file.mkdir(filePair.dest);
+                    } else {
+                        grunt.verbose.writeln('Copying ' + src.cyan + ' -> ' + filePair.dest.cyan);
+                        grunt.file.copy(src, filePair.dest);
+                    }
                 });
+            });
 
             // Create HTML ouput
             var html = handlebars.compile(grunt.file.read(template_filepath))({
