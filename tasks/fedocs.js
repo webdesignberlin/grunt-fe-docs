@@ -16,7 +16,7 @@ var beautify_html = require('js-beautify').html;
 module.exports = function (grunt) {
 
     // Register DSS
-    grunt.registerMultiTask('cssdocs', 'Parse DSS comment blocks', function () {
+    grunt.registerMultiTask('fedocs', 'Parse DSS comment blocks', function () {
 
         // Setup async promise
         var promise = this.async();
