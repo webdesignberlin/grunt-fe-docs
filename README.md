@@ -117,3 +117,41 @@ grunt.initConfig({
   },
 });
 ````
+
+### Possible tags
+
+```css
+/**
+ * @name content-box
+ * @description Module Content Box
+ * @type {partial}
+ *
+ * @dependencies full-box, something-else
+ *
+ * @link http://www.link-to-example.com
+ *
+ * @section .subline - Subline in small letters
+ * @section .slider - Pure css slider
+ *
+ * @requires {mixin} prefix
+ * @requires {function} emToPx
+ * @requires {placeholder} resetMarginPadding
+ *
+ * @decorator full-bg-left
+ * @decorator full-bg-right - Description of the decorator
+ * @decorator full-bg-both - Description of the decorator
+ *
+ * @state :hover - Description of the state
+ * @state opened - Description of the state
+ *
+ * @query min:$breakpoint-min, max:$breakpoint-max - Description of the query
+ * @query max:220px - Description of the query
+ * @query 48.35em
+ * @query device-pixel-ratio:1.0 - Description of the query
+ *
+ * @markup
+ * 	<div class="content-box">
+ * 		<p class="subline">This is a test</p>
+ * 	</div>
+ */
+```
