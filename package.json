@@ -1,36 +1,20 @@
 {
-  "name": "grunt-css-docs",
-  "description": "CSS Docs & Style Guide generator based on DSS. (Similar to JSDoc format) Template support Handlebars, Hogan, Jade, Mustache",
-  "version": "1.1.5",
-  "homepage": "https://github.com/roughcoder/grunt-css-docs",
-  "author": "Neil Barton <neil@roughcoder.com> (https://github.com/roughcoder)",
-  "contributors": [
-    {
-      "name": "Darcy Clarke",
-      "url": "https://github.com/darcyclarke"
-    },
-    {
-      "name": "Neil Barton",
-      "url": "https://github.com/roughcoder",
-      "email": "neil@roughcoder.com"
-    },
-    {
-      "name": "Paul Rudge",
-      "url": "https://github.com/fakeplasticpaul",
-      "email": "prudge@gumtree.com"
-    }
-  ],
+  "name": "grunt-fe-docs",
+  "description": "CSS Docs & Style Guide generator based on DSS and the grunt-css-docs plugin from roughcoder (https://github.com/roughcoder/grunt-css-docs). (Similar to JSDoc format) Template support Handlebars, Hogan, Jade, Mustache",
+  "version": "1.2.0",
+  "homepage": "https://github.com/Webastronaut/grunt-fe-docs",
+  "author": "Philip Morkisch <pm@webastronaut.org> (https://github.com/Webastronaut)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/roughcoder/grunt-css-docs"
+    "url": "https://github.com/Webastronaut/grunt-fe-docs"
   },
   "bugs": {
-    "url": "https://github.com/roughcoder/grunt-css-docs/issues"
+    "url": "https://github.com/Webastronaut/grunt-fe-docs/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/roughcoder/grunt-css-docs/blob/master/LICENSE-MIT"
+      "url": "https://github.com/Webastronaut/grunt-fe-docs/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
